@@ -20,7 +20,7 @@ const Login = () => {
       password: ''
     }
   });
-
+  console.log("env",import.meta.env.VITE_API_BASE_URL);
   const [userLogin, { isLoading }] = useUserLoginMutation();
 
   const onSubmit = async (data) => {
