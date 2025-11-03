@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 import { Link, useNavigate } from "react-router";
 import { LoadingIcon } from "../utils/icons";
 import { useUserLoginMutation } from "../redux/api/authApi";
@@ -42,6 +43,13 @@ const Login = () => {
         return;
       }
       if (result.data?.accessToken) {
+        const decodedUser = jwtDecode(result.data?.accessToken);
+        console.log({decodedUser});
+        if (decodedUser?.role === 'client') {
+          window.location.replace(`${import.meta.env.VITE_ROOT_CLIENT_URL}/user/profile`);
+        }else if (decodedUser?.role === 'admin' || decodedUser?.role === 'super-admin') {
+          window.location.replace(`${import.meta.env.VITE_ROOT_CLIENT_URL}/admin/dashboard`);
+        }
         storeUserInfo({ accessToken: result.data.accessToken });
         // Reset form on success
         reset();
