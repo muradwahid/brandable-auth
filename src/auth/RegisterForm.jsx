@@ -31,7 +31,7 @@ const RegisterForm = () => {
         toast('Redirecting to login page...', { duration: 600, id: 'redirectLogin' });
         redirectTime=setTimeout(() => {
           toast.dismiss('redirectLogin');
-          navigate('/auth/login');
+          navigate('/signin');
         }, 800);
         return () => {
           clearTimeout(redirectTime);
