@@ -12,6 +12,7 @@ export const axiosBaseQuery = ( { baseUrl } ) => async ({ url, method, data, par
           headers: {
             "Content-Type": contentType || "application/json",
           },
+          withCredentials:true
         });
         if (result?.success) {
           return result

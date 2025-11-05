@@ -20,16 +20,13 @@ const Login = () => {
       password: ''
     }
   });
-  console.log("env",import.meta.env.VITE_API_BASE_URL);
   const [userLogin, { isLoading }] = useUserLoginMutation();
 
   const onSubmit = async (data) => {
     let time;
     try {
       const result = await userLogin(data);
-      console.log(result);
       // Handle successful login (redirect, store token, etc.)
-      console.log('Login successful:', result);
       if (result?.error) {
         const err = result.error;
         if (err.message == 'User not found') {
@@ -44,16 +41,15 @@ const Login = () => {
       }
       if (result.data?.accessToken) {
         const decodedUser = jwtDecode(result.data?.accessToken);
-        console.log({decodedUser});
+        storeUserInfo({ accessToken: result.data.accessToken })
+        window.cookieStore('accessToken', result.data.accessToken);
         if (decodedUser?.role === 'client') {
           window.location.replace(`${import.meta.env.VITE_ROOT_CLIENT_URL}/user/profile`);
         }else if (decodedUser?.role === 'admin' || decodedUser?.role === 'super-admin') {
           window.location.replace(`${import.meta.env.VITE_ROOT_CLIENT_URL}/admin/dashboard`);
         }
-        storeUserInfo({ accessToken: result.data.accessToken });
         // Reset form on success
         reset();
-        toast.success('Login successful!');
         time = setTimeout(() => {
           navigate("/admin/dashboard", { replace: true });
         }, 500);
