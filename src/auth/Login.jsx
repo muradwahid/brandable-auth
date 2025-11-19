@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { LoadingIcon } from "../utils/icons";
 import { useUserLoginMutation } from "../redux/api/authApi";
 import { storeUserInfo } from "../helpers/user/user";
 
 const Login = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -42,7 +42,6 @@ const Login = () => {
       if (result.data?.accessToken) {
         const decodedUser = jwtDecode(result.data?.accessToken);
         storeUserInfo({ accessToken: result.data.accessToken })
-        window.cookieStore('accessToken', result.data.accessToken);
         if (decodedUser?.role === 'client') {
           window.location.replace(`${import.meta.env.VITE_ROOT_CLIENT_URL}/user/profile`);
         }else if (decodedUser?.role === 'admin' || decodedUser?.role === 'super-admin') {
@@ -50,16 +49,18 @@ const Login = () => {
         }
         // Reset form on success
         reset();
-        time = setTimeout(() => {
-          navigate("/admin/dashboard", { replace: true });
-        }, 500);
+        // time = setTimeout(() => {
+        //   navigate("/admin/dashboard", { replace: true });
+        // }, 500);
       } else {
+        console.log('else error :');
         toast.error('Login failed. Please try again.');
       }
 
 
       // eslint-disable-next-line no-unused-vars
     } catch (error) {
+      console.log("try error:",error);
       toast.error('Login failed. Please try again.');
     }
     return () => clearTimeout(time);
