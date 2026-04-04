@@ -42,6 +42,38 @@ export const authApi = baseApi.injectEndpoints({
       },
       providesTags: ["auth", 'update','signin'],
     }),
+    sendEmailOtp: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/send-email-otp`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    verifyOtp: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/check-otp`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    updatePassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/update-password`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
+    forgotPassword: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/forgot-password`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["auth"],
+    }),
     updateUser: build.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/update/${data.id}`,
@@ -65,6 +97,10 @@ export const authApi = baseApi.injectEndpoints({
 });
 
 export const { useUsersQuery,
+  useSendEmailOtpMutation,
+  useVerifyOtpMutation,
+  useUpdatePasswordMutation,
+  useForgotPasswordMutation,
   useUserLoginMutation,
   useCreateUserMutation,
   useUserQuery,

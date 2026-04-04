@@ -89,7 +89,7 @@ const Login = () => {
                     <span className="text-red-400 text-xs">{errors.email.message}</span>
                   )}
                 </div>
-                <div className="mb-4">
+                <div className="mb-2">
                   <label htmlFor="password" className="block text-sm font-poppins text-[#5F6368] mb-2">Password</label>
                   <input type="password" id="password" {...register('password', {
                     required: 'Password is required'
@@ -98,6 +98,7 @@ const Login = () => {
                     <span className="text-red-400 text-xs">{errors.password.message}</span>
                   )}
                 </div>
+                <Link to='/forgot-password' className='mb-2 text-[#008CFF] float-end hover:opacity-80 transition duration-200'>Forgot password?</Link>
                 <button type="submit" disabled={isLoading} className="w-full flex gap-3 justify-center cursor-pointer bg-[#002447] px-2.5 py-3 text-white hover:bg-[#0c3761] transition duration-300">Sign In {isLoading && <LoadingIcon fill='#fff' style={{ height: "20px" }} />}</button>
               </form>
               <div className='flex justify-end mt-4'>
